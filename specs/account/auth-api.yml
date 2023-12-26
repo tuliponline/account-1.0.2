@@ -1,0 +1,347 @@
+openapi: 3.0.1
+info:
+  contact: {}
+servers:
+  - url: /
+paths:
+  /v1/auth/forgot-password:
+    post:
+      tags:
+        - Auth
+      operationId: ForgotPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/types.ForgotPasswordRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.ForgotPasswordResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      x-codegen-request-body-name: body
+  /v1/auth/idp:
+    get:
+      tags:
+        - Auth
+      operationId: GetIdp
+      parameters:
+        - name: provider
+          in: query
+          schema:
+            type: string
+        - name: redirect_uri
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.IdpResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+  /v1/auth/login:
+    post:
+      tags:
+        - Auth
+      operationId: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/types.LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.LoginResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      x-codegen-request-body-name: body
+  /v1/auth/register:
+    post:
+      tags:
+        - Auth
+      operationId: Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/types.RegisterRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.RegisterResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      x-codegen-request-body-name: body
+  /v1/auth/reset-password:
+    post:
+      tags:
+        - Auth
+      operationId: ResetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/types.ResetPasswordRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.ResetPasswordResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      x-codegen-request-body-name: body
+  /v1/auth/token:
+    get:
+      tags:
+        - Auth
+      operationId: GetToken
+      parameters:
+        - name: client_secret
+          in: query
+          schema:
+            type: string
+        - name: code
+          in: query
+          schema:
+            type: string
+        - name: code_verifier
+          in: query
+          schema:
+            type: string
+        - name: grant_type
+          in: query
+          schema:
+            type: string
+        - name: redirect_uri
+          in: query
+          schema:
+            type: string
+        - name: refresh_token
+          in: query
+          schema:
+            type: string
+        - name: scope
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.TokenResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+components:
+  schemas:
+    result.ResponseError:
+      type: object
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+    result.ResponseSuccess:
+      type: object
+      properties:
+        code:
+          type: string
+        data:
+          type: object
+        msg:
+          type: string
+    types.ForgotPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+    types.ForgotPasswordResponse:
+      type: object
+    types.IdpResponse:
+      type: object
+      properties:
+        authorize_uri:
+          type: string
+    types.LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    types.LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        id_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+    types.RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        password:
+          type: string
+        phone_number:
+          type: string
+    types.RegisterResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        id_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+    types.ResetPasswordRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    types.ResetPasswordResponse:
+      type: object
+    types.TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        id_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+x-original-swagger-version: "2.0"

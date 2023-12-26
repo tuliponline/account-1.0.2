@@ -1,0 +1,4 @@
+include:
+  project: 'deployment/pipeline/ci-script'
+  ref: v2.0.0
+  file: 'codegen/dart-gitlab-ci.yml'

@@ -1,0 +1,186 @@
+openapi: 3.0.1
+info:
+  contact: {}
+servers:
+  - url: /
+paths:
+  /v1/users/change-password:
+    post:
+      tags:
+        - User
+      operationId: ChangePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/types.ChangePasswordRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.ChangePasswordResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      security:
+        - Bearer: []
+      x-codegen-request-body-name: body
+  /v1/users/me:
+    get:
+      tags:
+        - User
+      operationId: Me
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.MeResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      security:
+        - Bearer: []
+  /v1/users/profile:
+    patch:
+      tags:
+        - User
+      operationId: UpdateProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/types.UpdateProfileRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/result.ResponseSuccess'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/types.UpdateProfileResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result.ResponseError'
+      security:
+        - Bearer: []
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    result.ResponseError:
+      type: object
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+    result.ResponseSuccess:
+      type: object
+      properties:
+        code:
+          type: string
+        data:
+          type: object
+        msg:
+          type: string
+    types.ChangePasswordRequest:
+      type: object
+      properties:
+        authorization:
+          type: string
+        new_password:
+          type: string
+        old_password:
+          type: string
+    types.ChangePasswordResponse:
+      type: object
+    types.MeResponse:
+      type: object
+      properties:
+        email:
+          type: string
+        first_name:
+          type: string
+        id:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        picture:
+          type: string
+    types.UpdateProfileRequest:
+      type: object
+      properties:
+        authorization:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        picture:
+          type: string
+    types.UpdateProfileResponse:
+      type: object
+      properties:
+        avatar:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        id:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+x-original-swagger-version: "2.0"
